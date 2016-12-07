@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qxf-oQ-uIT">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tab Bar Controller-->
+        <scene sceneID="cdA-qU-soO">
+            <objects>
+                <tabBarController id="qxf-oQ-uIT" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="fXq-G6-6ig">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="ydh-lp-FL5" kind="relationship" relationship="viewControllers" id="whX-Ke-PGV"/>
+                        <segue destination="jAL-KJ-g2V" kind="relationship" relationship="viewControllers" id="0gi-yN-bFO"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wCl-cL-2lZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-758" y="-363"/>
+        </scene>
+        <!--Downloads-->
+        <scene sceneID="7hr-r8-2cA">
+            <objects>
+                <tableViewController id="nw0-MF-5iW" customClass="SavedTableViewController" customModule="NewSpotifyApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="5sw-OV-ml8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="maY-db-1fn">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="maY-db-1fn" id="jmm-UN-qA8">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="nw0-MF-5iW" id="jdW-CI-f4E"/>
+                            <outlet property="delegate" destination="nw0-MF-5iW" id="WES-RQ-sRG"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Downloads" id="MOR-2b-uVd"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e03-8e-XlU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1132" y="5.8470764617691158"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="yPb-sD-Dv5">
+            <objects>
+                <tableViewController id="Y61-fL-B8s" customClass="SearchTableViewController" customModule="NewSpotifyApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Gt3-FQ-AHl">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="JWn-UJ-Mdc">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JWn-UJ-Mdc" id="r4M-Oe-DZf">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Y61-fL-B8s" id="cF4-EG-M2r"/>
+                            <outlet property="delegate" destination="Y61-fL-B8s" id="mt2-9k-6Al"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Search" id="Ajx-X0-vVp"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cPn-c0-9hX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1132" y="-719.19040479760122"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8Mg-yb-kvq">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ydh-lp-FL5" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="search" id="Oqx-Nd-b8s"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7sX-9B-Wv0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y61-fL-B8s" kind="relationship" relationship="rootViewController" id="8z8-er-GCv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3GS-4T-QiE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="192.80000000000001" y="-719.19040479760122"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="EY6-GM-ExM">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jAL-KJ-g2V" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="downloads" id="eYE-4V-dNz"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Uwa-zc-mBp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="nw0-MF-5iW" kind="relationship" relationship="rootViewController" id="RoZ-Dk-aVh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FZO-gt-Fx2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="192.80000000000001" y="5.8470764617691158"/>
+        </scene>
+    </scenes>
+</document>
