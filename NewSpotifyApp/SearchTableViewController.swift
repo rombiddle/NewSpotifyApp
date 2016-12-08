@@ -8,18 +8,40 @@
 
 import UIKit
 
-class SearchTableViewController: UITableViewController {
-
+class SearchTableViewController: UITableViewController, UISearchResultsUpdating {
+    
+    var items = [String]()
+    var filteredItems = [String]()
+    var searchController : UISearchController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        items.append("iPod")
+        items.append("iPad")
+        items.append("iPhone")
+        items.append("iMac")
+        items.append("MacBook Pro")
+        items.append("MacBook Air")
+        
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.dimsBackgroundDuringPresentation = true
+        searchController.searchBar.sizeToFit()
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        searchController.searchResultsUpdater = self
+        
+        tableView.tableHeaderView = searchController.searchBar
+        tableView.reloadData()
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -29,23 +51,45 @@ class SearchTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        if searchController.isActive{
+            return filteredItems.count
+        }else{
+            return items.count
+        }
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        filteredItems.removeAll(keepingCapacity: false)
+        
+        // filter
+        filteredItems = items.filter{
+            item in
+            
+            item.lowercased().contains(searchController.searchBar.text!.lowercased())
+        }
+        
+        tableView.reloadData()
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
         // Configure the cell...
+        if searchController.isActive{
+            cell.textLabel?.text = filteredItems[indexPath.row]
+        }else{
+            cell.textLabel?.text = items[indexPath.row]
+        }
 
         return cell
     }
-    */
+ 
 
     /*
     // Override to support conditional editing of the table view.

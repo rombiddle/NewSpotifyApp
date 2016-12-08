@@ -17,10 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     var window: UIWindow?
     var session: SPTSession?
     var player: SPTAudioStreamingController?
-    let kClientId = "ca5c4490e38f41818a6d32a14a0ad2f3"
-    let kCallbackURL = "spotifytest://returnAfterLogin"
-    let kTokenSwapURL = "http://localhost:1234/swap"
-    let kTokenRefreshServiceURL = "http://localhost:1234/refresh"
+    // The client ID you got from the developer site
+    let kClientId = "50bbc411753b4e7cbab430ace0b42fb2"
+    // The redirect URL as you entered it at the developer site
+    let kCallbackURL = "new-spotify-app://callback"
+    //let kTokenSwapURL = "http://localhost:1234/swap"
+    //let kTokenRefreshServiceURL = "http://localhost:1234/refresh"
+    // Setting the `sessionUserDefaultsKey` enables SPTAuth to automatically store the session object for future use.
     let kSessionUserDefaultsKey = "SpotifySession"
     
     func delay(_ delay:Double, closure:@escaping ()->()) {
@@ -31,11 +34,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        // The client ID you got from the developer site
         SPTAuth.defaultInstance().clientID = kClientId
+        
+        // The redirect URL as you entered it at the developer site
         SPTAuth.defaultInstance().redirectURL = URL(string:kCallbackURL)
+        
         //SPTAuth.defaultInstance().tokenSwapURL = URL(string:kTokenSwapURL)
+        
+        // Set the scopes you need the user to authorize. `SPTAuthStreamingScope` is required for playing audio.
         SPTAuth.defaultInstance().requestedScopes = [SPTAuthStreamingScope]
+        
         //SPTAuth.defaultInstance().tokenRefreshURL = URL(string: kTokenRefreshServiceURL)!
+        
+        // Setting the `sessionUserDefaultsKey` enables SPTAuth to automatically store the session object for future use.
         SPTAuth.defaultInstance().sessionUserDefaultsKey = kSessionUserDefaultsKey
         
         return true
@@ -45,8 +57,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
         // Ask SPTAuth if the URL given is a Spotify authentication callback
         
         print("The URL: \(url)")
+        
+        // If the incoming url is what we expect we handle it
         if SPTAuth.defaultInstance().canHandle(url) {
-            SPTAuth.defaultInstance().handleAuthCallback(withTriggeredAuthURL: url) { error, session in
+                SPTAuth.defaultInstance().handleAuthCallback(withTriggeredAuthURL: url) { error, session in
                 // This is the callback that'll be triggered when auth is completed (or fails).
                 if error != nil {
                     print("*** Auth error: \(error)")

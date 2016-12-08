@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qxf-oQ-uIT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="YUy-V4-sCT">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,6 +9,46 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="eNY-f8-6Sn">
+            <objects>
+                <viewController id="2VL-qL-LQE" customClass="LoginViewController" customModule="NewSpotifyApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bGc-cE-N2Y"/>
+                        <viewControllerLayoutGuide type="bottom" id="40A-lR-Ywn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="93U-FB-BqS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Spotify_Logo_RGB_Green.png" translatesAutoresizingMaskIntoConstraints="NO" id="j0r-j5-PQO">
+                                <rect key="frame" x="16" y="101" width="343" height="201"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FgL-mC-cMb">
+                                <rect key="frame" x="127" y="373" width="120" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.18039215689999999" green="0.74117647060000003" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="20"/>
+                                <state key="normal" title="LOG IN">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginButton:" destination="2VL-qL-LQE" eventType="touchUpInside" id="69l-bQ-qNu"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="wJm-cf-Frg"/>
+                    <connections>
+                        <segue destination="qxf-oQ-uIT" kind="show" identifier="ShowPlayer" id="zdj-iE-RCh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G9m-aI-HsL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="101.59999999999999" y="-363.86806596701655"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="cdA-qU-soO">
             <objects>
@@ -25,7 +65,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wCl-cL-2lZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-758" y="-363"/>
+            <point key="canvasLocation" x="1119.2" y="-363.86806596701655"/>
         </scene>
         <!--Downloads-->
         <scene sceneID="7hr-r8-2cA">
@@ -54,7 +94,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e03-8e-XlU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1132" y="5.8470764617691158"/>
+            <point key="canvasLocation" x="3010.4000000000001" y="5.8470764617691158"/>
         </scene>
         <!--Search-->
         <scene sceneID="yPb-sD-Dv5">
@@ -65,7 +105,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="JWn-UJ-Mdc">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="reuseIdentifier" id="JWn-UJ-Mdc">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JWn-UJ-Mdc" id="r4M-Oe-DZf">
@@ -83,7 +123,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cPn-c0-9hX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1132" y="-719.19040479760122"/>
+            <point key="canvasLocation" x="3010.4000000000001" y="-719.19040479760122"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8Mg-yb-kvq">
@@ -102,7 +142,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3GS-4T-QiE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="192.80000000000001" y="-719.19040479760122"/>
+            <point key="canvasLocation" x="2071.1999999999998" y="-719.19040479760122"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EY6-GM-ExM">
@@ -121,7 +161,28 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FZO-gt-Fx2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="192.80000000000001" y="5.8470764617691158"/>
+            <point key="canvasLocation" x="2071.1999999999998" y="5.8470764617691158"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ZX1-WM-oLV">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YUy-V4-sCT" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="XnK-Ab-ZH0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="2VL-qL-LQE" kind="relationship" relationship="rootViewController" id="gK4-ci-Oyh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ABf-AV-QN4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-837.60000000000002" y="-363.86806596701655"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Spotify_Logo_RGB_Green.png" width="2362" height="709"/>
+    </resources>
 </document>
