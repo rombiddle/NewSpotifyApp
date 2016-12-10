@@ -13,10 +13,14 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
     
     var authViewController: UIViewController?
     var firstLoad: Bool!
-
-    @IBAction func loginButton(_ sender: UIButton) {
+    
+    
+    
+    @IBAction func loginButtonS(_ sender: UIButton) {
         self.openLoginPage()
     }
+    
+    
     
     func openLoginPage() {
         //self.statusLabel.text = "Logging in..."
@@ -43,6 +47,10 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
         //self.statusLabel.text = ""
         self.firstLoad = true
         // Do any additional setup after loading the view.
+        
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {

@@ -7,44 +7,71 @@
 //
 
 import UIKit
+import Alamofire
 
-class SearchTableViewController: UITableViewController, UISearchResultsUpdating {
+class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     
-    var items = [String]()
-    var filteredItems = [String]()
     var searchController : UISearchController!
+    var names = [String]()
+    var searchURL = "https://api.spotify.com/v1/search?type=track&q="
+    typealias JSONStandard = [String : AnyObject]
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
-        items.append("iPod")
-        items.append("iPad")
-        items.append("iPhone")
-        items.append("iMac")
-        items.append("MacBook Pro")
-        items.append("MacBook Air")
-        
         searchController = UISearchController(searchResultsController: nil)
+        // A Boolean indicating whether the underlying content is dimmed during a search.
         searchController.dimsBackgroundDuringPresentation = true
-        searchController.searchBar.sizeToFit()
+        // A Boolean indicating whether the navigation bar should be hidden when searching.
         searchController.hidesNavigationBarDuringPresentation = false
         
-        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         
         tableView.tableHeaderView = searchController.searchBar
         tableView.reloadData()
         
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    // Alamo
+    
+    func callAlamo(url: String) {
+        Alamofire.request(url).responseJSON { (response) in
+            self.parseData(JSONData: response.data!)
+        }
+    }
+    
+    func parseData(JSONData: Data) {
+        do {
+            var readableJSON = try JSONSerialization.jsonObject(with: JSONData, options: .mutableContainers) as! JSONStandard
+            if let tracks = readableJSON["tracks"] as? JSONStandard {
+                if let items = tracks["items"] as? NSArray {
+                    for itemz in items {
+                        let item = itemz as! JSONStandard
+                        let name = item["name"] as! String
+                        names.append(name)
+                    }
+                }
+            }
+        }
+        catch {
+            print(error)
+        }
+        tableView.reloadData()
+    }
+    
+    // Search Bar Delegate
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        names.removeAll()
+        tableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let urlCreate = try? SPTSearch.createRequestForSearch(withQuery: searchController.searchBar.text!.lowercased(), queryType: .queryTypeTrack, accessToken: SPTAuth.defaultInstance().session.accessToken!) {
+            callAlamo(url: String(describing: urlCreate))
+        }
+        searchController.isActive = false
     }
 
     // MARK: - Table view data source
@@ -56,75 +83,17 @@ class SearchTableViewController: UITableViewController, UISearchResultsUpdating 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if searchController.isActive{
-            return filteredItems.count
-        }else{
-            return items.count
-        }
+        return names.count
     }
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        filteredItems.removeAll(keepingCapacity: false)
-        
-        // filter
-        filteredItems = items.filter{
-            item in
-            
-            item.lowercased().contains(searchController.searchBar.text!.lowercased())
-        }
-        
-        tableView.reloadData()
-    }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
         // Configure the cell...
-        if searchController.isActive{
-            cell.textLabel?.text = filteredItems[indexPath.row]
-        }else{
-            cell.textLabel?.text = items[indexPath.row]
-        }
+        cell.textLabel?.text = names[indexPath.row]
 
         return cell
     }
- 
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation
