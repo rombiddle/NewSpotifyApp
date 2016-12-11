@@ -14,13 +14,11 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
     var authViewController: UIViewController?
     var firstLoad: Bool!
     
-    
+    @IBOutlet var loginButtonOutlet: UIButton!
     
     @IBAction func loginButtonS(_ sender: UIButton) {
         self.openLoginPage()
     }
-    
-    
     
     func openLoginPage() {
         //self.statusLabel.text = "Logging in..."
@@ -48,7 +46,7 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
         self.firstLoad = true
         // Do any additional setup after loading the view.
         
-        
+        loginButtonOutlet.layer.cornerRadius = 20
         
         
     }
@@ -129,26 +127,26 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
         // User tapped the close button. Treat as auth error
     }
     
-    @IBAction func loginButtonWasPressed(_ sender: SPTConnectButton) {
-        self.openLoginPage()
-    }
+//    @IBAction func loginButtonWasPressed(_ sender: SPTConnectButton) {
+//        self.openLoginPage()
+//    }
     
-    @IBAction func showSpotifyAppStoreClicked(_ sender: UIButton) {
-        //self.statusLabel.text = "Presenting App Store..."
-        let storeVC = SPTStoreViewController(campaignToken: "your_campaign_token", store: self)
-        self.present(storeVC!, animated: true, completion: { _ in })
-    }
-    
-    @IBAction func clearCookiesClicked(_ sender: UIButton) {
-        let storage = HTTPCookieStorage.shared
-        for cookie: HTTPCookie in storage.cookies! {
-            if (cookie.domain as NSString).range(of: "spotify.").length > 0 || (cookie.domain as NSString).range(of: "facebook.").length > 0 {
-                storage.deleteCookie(cookie)
-            }
-        }
-        UserDefaults.standard.synchronize()
-        //self.statusLabel.text! = "Cookies cleared."
-    }
+//    @IBAction func showSpotifyAppStoreClicked(_ sender: UIButton) {
+//        //self.statusLabel.text = "Presenting App Store..."
+//        let storeVC = SPTStoreViewController(campaignToken: "your_campaign_token", store: self)
+//        self.present(storeVC!, animated: true, completion: { _ in })
+//    }
+//    
+//    @IBAction func clearCookiesClicked(_ sender: UIButton) {
+//        let storage = HTTPCookieStorage.shared
+//        for cookie: HTTPCookie in storage.cookies! {
+//            if (cookie.domain as NSString).range(of: "spotify.").length > 0 || (cookie.domain as NSString).range(of: "facebook.").length > 0 {
+//                storage.deleteCookie(cookie)
+//            }
+//        }
+//        UserDefaults.standard.synchronize()
+//        //self.statusLabel.text! = "Cookies cleared."
+//    }
 
 
     /*

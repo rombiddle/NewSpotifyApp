@@ -13,7 +13,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     
     var searchController : UISearchController!
     var names = [String]()
-    var searchURL = "https://api.spotify.com/v1/search?type=track&q="
     typealias JSONStandard = [String : AnyObject]
     
     override func viewDidLoad() {
@@ -66,8 +65,21 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         names.removeAll()
         tableView.reloadData()
     }
-    
+     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+//        let urlCreate = try? SPTSearch.createRequestForSearch(withQuery: searchController.searchBar.text!.lowercased(), queryType: .queryTypeTrack, accessToken: SPTAuth.defaultInstance().session.accessToken!)
+//        
+//        let data = urlCreate?.httpBody
+//        let json = try? JSONSerialization.jsonObject(with: data!, options: [])
+//        print("1")
+//        
+//        if let result = try? SPTSearch.searchResults(fromDecodedJSON: json, queryType: .queryTypeTrack){
+//            print("result = \(result)")
+//        }
+        
+        
+        
         if let urlCreate = try? SPTSearch.createRequestForSearch(withQuery: searchController.searchBar.text!.lowercased(), queryType: .queryTypeTrack, accessToken: SPTAuth.defaultInstance().session.accessToken!) {
             callAlamo(url: String(describing: urlCreate))
         }
