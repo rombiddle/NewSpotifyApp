@@ -8,11 +8,21 @@
 
 import UIKit
 import Alamofire
+import AVFoundation
+
+var player = AVAudioPlayer()
+
+struct song {
+    let titleSong : String
+    let artist : String
+    let albumImage : UIImage
+    let song : String
+}
 
 class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     
     var searchController : UISearchController!
-    var names = [String]()
+    var songs = [song]()
     typealias JSONStandard = [String : AnyObject]
     
     override func viewDidLoad() {
@@ -35,6 +45,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     // Alamo
     
     func callAlamo(url: String) {
+        print(url)
         Alamofire.request(url).responseJSON { (response) in
             self.parseData(JSONData: response.data!)
         }
@@ -44,42 +55,46 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         do {
             var readableJSON = try JSONSerialization.jsonObject(with: JSONData, options: .mutableContainers) as! JSONStandard
             if let tracks = readableJSON["tracks"] as? JSONStandard {
-                if let items = tracks["items"] as? NSArray {
-                    for itemz in items {
-                        let item = itemz as! JSONStandard
+                if let items = tracks["items"] as? [JSONStandard] {
+                    for item in items {
+                        let songURL = item["href"] as! String
+                        print("songURL = \(songURL)")
                         let name = item["name"] as! String
-                        names.append(name)
+                        if let album = item["album"] as? JSONStandard{
+                            if let images = album["images"] as? [JSONStandard] {
+                                var artistName = ""
+                                if let artists = album["artists"] as? [JSONStandard] {
+                                    if let artist = artists[0] as? JSONStandard {
+                                        artistName = artist["name"] as! String
+                                    }
+                                }
+                                if let imageObject = images[0] as? JSONStandard {
+                                    let imageURL = NSURL(string: imageObject["url"] as! String)
+                                    let imageData = NSData(contentsOf: imageURL as! URL)
+                                    let image = UIImage(data: imageData as! Data)
+                                    songs.append(song.init(titleSong: name, artist: artistName, albumImage: image!, song: songURL))
+                                }
+                                
+                            }
+                        }
                     }
                 }
             }
+            tableView.reloadData()
         }
         catch {
             print(error)
         }
-        tableView.reloadData()
     }
     
     // Search Bar Delegate
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        names.removeAll()
+        songs.removeAll()
         tableView.reloadData()
     }
      
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-//        let urlCreate = try? SPTSearch.createRequestForSearch(withQuery: searchController.searchBar.text!.lowercased(), queryType: .queryTypeTrack, accessToken: SPTAuth.defaultInstance().session.accessToken!)
-//        
-//        let data = urlCreate?.httpBody
-//        let json = try? JSONSerialization.jsonObject(with: data!, options: [])
-//        print("1")
-//        
-//        if let result = try? SPTSearch.searchResults(fromDecodedJSON: json, queryType: .queryTypeTrack){
-//            print("result = \(result)")
-//        }
-        
-        
-        
         if let urlCreate = try? SPTSearch.createRequestForSearch(withQuery: searchController.searchBar.text!.lowercased(), queryType: .queryTypeTrack, accessToken: SPTAuth.defaultInstance().session.accessToken!) {
             callAlamo(url: String(describing: urlCreate))
         }
@@ -95,26 +110,32 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return names.count
+        return songs.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
         // Configure the cell...
-        cell.textLabel?.text = names[indexPath.row]
-
+        let imageView = cell.viewWithTag(1) as! UIImageView
+        imageView.image = songs[indexPath.row].albumImage
+        let songLabel = cell.viewWithTag(2) as! UILabel
+        songLabel.text = songs[indexPath.row].titleSong
+        let artistLabel = cell.viewWithTag(3) as! UILabel
+        artistLabel.text = songs[indexPath.row].artist
+        
         return cell
     }
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        let destinationvc = segue.destination as! MusicPlayerViewController
+        if let indexPath = tableView.indexPathForSelectedRow?.row {
+            destinationvc.albumIm = songs[indexPath].albumImage
+            destinationvc.songTitle = songs[indexPath].titleSong
+            destinationvc.artist = songs[indexPath].artist
+            destinationvc.song = songs[indexPath].song
+        }
     }
-    */
-
 }
