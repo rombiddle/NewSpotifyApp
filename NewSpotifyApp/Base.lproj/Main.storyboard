@@ -123,15 +123,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="reuseIdentifier" rowHeight="81" id="JWn-UJ-Mdc">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="reuseIdentifier" rowHeight="81" id="JWn-UJ-Mdc">
                                 <rect key="frame" x="0.0" y="28" width="320" height="81"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JWn-UJ-Mdc" id="r4M-Oe-DZf">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="253" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="bzN-uZ-TfD">
-                                            <rect key="frame" x="8" y="8" width="271" height="64"/>
+                                            <rect key="frame" x="8" y="8" width="237" height="64"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zOK-CE-E8R">
                                                     <rect key="frame" x="0.0" y="0.0" width="64" height="64"/>
@@ -140,7 +140,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="G3V-Vi-sca">
-                                                    <rect key="frame" x="69" y="0.0" width="202" height="64"/>
+                                                    <rect key="frame" x="69" y="0.0" width="168" height="64"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UbZ-mr-3WZ">
                                                             <rect key="frame" x="0.0" y="0.0" width="37.5" height="32"/>
@@ -167,7 +167,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="6eR-GS-OTy" kind="show" id="28N-iY-GUy"/>
+                                    <segue destination="6eR-GS-OTy" kind="show" identifier="musicPlayer" id="28N-iY-GUy"/>
+                                    <segue destination="Gz3-em-e4x" kind="show" identifier="searchWeb" trigger="accessoryAction" id="5oh-dc-4h1"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -181,6 +182,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cPn-c0-9hX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3009.375" y="-719.36619718309862"/>
+        </scene>
+        <!--Search Web View Controller-->
+        <scene sceneID="jI2-Li-Rr5">
+            <objects>
+                <viewController id="Gz3-em-e4x" customClass="SearchWebViewController" customModule="NewSpotifyApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vc1-BA-dDh"/>
+                        <viewControllerLayoutGuide type="bottom" id="Y57-Op-lb3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ytl-KG-LGL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r4V-Ec-mYZ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="r4V-Ec-mYZ" secondAttribute="bottom" id="H6o-hk-rlj"/>
+                            <constraint firstAttribute="trailing" secondItem="r4V-Ec-mYZ" secondAttribute="trailing" id="jSY-gU-Hop"/>
+                            <constraint firstItem="r4V-Ec-mYZ" firstAttribute="leading" secondItem="ytl-KG-LGL" secondAttribute="leading" id="kgP-Zx-P7Z"/>
+                            <constraint firstItem="r4V-Ec-mYZ" firstAttribute="top" secondItem="ytl-KG-LGL" secondAttribute="top" id="wju-Eb-5SR"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="r4V-Ec-mYZ" id="g8c-su-pnO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ciJ-S9-zZj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4320" y="-1120"/>
         </scene>
         <!--Music Player View Controller-->
         <scene sceneID="wWm-Hg-skL">
@@ -275,7 +309,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ie1-84-0an" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4063" y="-719"/>
+            <point key="canvasLocation" x="4320" y="-355"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8Mg-yb-kvq">

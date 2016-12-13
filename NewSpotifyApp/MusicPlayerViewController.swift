@@ -39,6 +39,7 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     }
     
     func updateUI() {
+        print("updateUI")
         // SPTAuth = This class provides helper methods for authenticating users against the Spotify OAuth authentication service.
         let auth = SPTAuth.defaultInstance()
         if SPTAudioStreamingController.sharedInstance().metadata == nil || SPTAudioStreamingController.sharedInstance().metadata.currentTrack == nil {
@@ -91,12 +92,14 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        print("viewDidAppear")
         super.viewDidAppear(animated)
         self.handleNewSession()
         print("session: \(SPTAuth.defaultInstance().session.accessToken!)")
     }
     
     func handleNewSession() {
+        print("handleNewSession")
         do {
             // Start the `SPAudioStreamingController` thread with a custom audio controller
             try SPTAudioStreamingController.sharedInstance().start(withClientId: SPTAuth.defaultInstance().clientID, audioController: nil, allowCaching: true)
@@ -114,6 +117,7 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     }
     
     func closeSession() {
+        print("closeSession")
         do {
             // Shut down the `SPTAudioStreamingController` thread
             try SPTAudioStreamingController.sharedInstance().stop()
@@ -128,6 +132,7 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     
     // Called when the streaming controller recieved a message for the end user from the Spotify service
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController, didReceiveMessage message: String) {
+        print("didReceiveMessage")
         let alert = UIAlertController(title: "Message from Spotify", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         self.present(alert, animated: true, completion: { _ in })
@@ -135,6 +140,7 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     
     // Called when playback status changes
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController, didChangePlaybackStatus isPlaying: Bool) {
+        print("didChangePlaybackStatus")
         print("is playing = \(isPlaying)")
         if isPlaying {
             self.activateAudioSession()
@@ -150,17 +156,20 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     // not require action, but should be used to keep the UI display updated with
     // the latest metadata information.
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController, didChange metadata: SPTPlaybackMetadata) {
+        print("didChange")
         self.updateUI()
     }
     
     // Called for each received low-level event
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController, didReceive event: SpPlaybackEvent, withName name: String) {
+        print("didReceive")
         print("didReceivePlaybackEvent: \(event) \(name)")
         print("isPlaying=\(SPTAudioStreamingController.sharedInstance().playbackState.isPlaying) isRepeating=\(SPTAudioStreamingController.sharedInstance().playbackState.isRepeating) isShufflin/Users/romainbrunie/Downloads/SpotifyDemo/SpotifyDemo/Images.xcassets/loginButton.imageset/log_in-mobile.pngg=\(SPTAudioStreamingController.sharedInstance().playbackState.isShuffling) isActiveDevice=\(SPTAudioStreamingController.sharedInstance().playbackState.isActiveDevice) positionMs=\(SPTAudioStreamingController.sharedInstance().playbackState.position)")
     }
     
     // Called when the streaming controller logs out
     func audioStreamingDidLogout(_ audioStreaming: SPTAudioStreamingController) {
+        print("audioStreamingDidLogout")
         self.closeSession()
     }
     
@@ -171,6 +180,7 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     
     // Called when playback has progressed
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController, didChangePosition position: TimeInterval) {
+        print("didChangePosition")
 //        if self.isChangingProgress {
 //            return
 //        }
@@ -196,8 +206,11 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     
     // Called when the streaming controller logs in successfully
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController) {
+        print("audioStreamingDidLogin")
         self.updateUI()
-        SPTAudioStreamingController.sharedInstance().playSpotifyURI("spotify:user:spotify:playlist:2yLXxKhhziG2xzy7eyD4TD", startingWith: 0, startingWithPosition: 10) { error in
+        print("song = \(song)")
+        //SPTAudioStreamingController.sharedInstance().pl
+        SPTAudioStreamingController.sharedInstance().playSpotifyURI(song, startingWith: 0, startingWithPosition: 10) { error in
             if error != nil {
                 print("*** failed to play: \(error)")
                 return
@@ -206,6 +219,7 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     }
     
     func activateAudioSession() {
+        print("activateAudioSession")
         do {
             try audioSession.setCategory(AVAudioSessionCategoryPlayback)
             try audioSession.setActive(true)
@@ -216,6 +230,7 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     }
     
     func deactivateAudioSession() {
+        print("deactivateAudioSession")
         do {
             try AVAudioSession.sharedInstance().setActive(false)
         }
@@ -225,6 +240,7 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     }
 
     override func viewDidLoad() {
+        print("viewDidLoad")
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         songTitleLabel.text = songTitle

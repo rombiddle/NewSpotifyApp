@@ -57,7 +57,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             if let tracks = readableJSON["tracks"] as? JSONStandard {
                 if let items = tracks["items"] as? [JSONStandard] {
                     for item in items {
-                        let songURL = item["href"] as! String
+                        let songURL = item["uri"] as! String
                         print("songURL = \(songURL)")
                         let name = item["name"] as! String
                         if let album = item["album"] as? JSONStandard{
@@ -130,12 +130,25 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationvc = segue.destination as! MusicPlayerViewController
-        if let indexPath = tableView.indexPathForSelectedRow?.row {
-            destinationvc.albumIm = songs[indexPath].albumImage
-            destinationvc.songTitle = songs[indexPath].titleSong
-            destinationvc.artist = songs[indexPath].artist
-            destinationvc.song = songs[indexPath].song
+        if segue.identifier == "musicPlayer" {
+            let destinationvc = segue.destination as! MusicPlayerViewController
+            if let indexPath = tableView.indexPathForSelectedRow?.row {
+                destinationvc.albumIm = songs[indexPath].albumImage
+                destinationvc.songTitle = songs[indexPath].titleSong
+                destinationvc.artist = songs[indexPath].artist
+                destinationvc.song = songs[indexPath].song
+            }
+        } else if segue.identifier == "searchWeb" {
+            let destinationvc = segue.destination as! SearchWebViewController
+            let indexPath2 = tableView.indexPathForSelectedRow?.row.
+            print("indexPath2 = \(indexPath2)")
+            if let indexPath = tableView.indexPathForSelectedRow?.row {
+                destinationvc.artist = songs[indexPath].artist
+                print("art = \(destinationvc.artist)")
+            }
+        } else {
+            print("no segue")
         }
+        
     }
 }
