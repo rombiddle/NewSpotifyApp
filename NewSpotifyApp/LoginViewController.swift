@@ -23,9 +23,12 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
     func openLoginPage() {
         //self.statusLabel.text = "Logging in..."
         let auth = SPTAuth.defaultInstance()
+        // Check if "flip-flop" application authentication is supported.
         if SPTAuth.supportsApplicationAuthentication() {
+            print("flip flop supported")
             UIApplication.shared.openURL(auth!.spotifyAppAuthenticationURL())
         } else {
+            print("flip flop NOT supported")
             self.authViewController = self.getAuthViewController(withURL: SPTAuth.defaultInstance().spotifyWebAuthenticationURL())
             self.definesPresentationContext = true
             self.present(self.authViewController!, animated: true, completion: { _ in })

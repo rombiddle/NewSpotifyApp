@@ -28,6 +28,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        //self.tableView.delegate = self
+        //self.tableView.dataSource = self
         
         searchController = UISearchController(searchResultsController: nil)
         // A Boolean indicating whether the underlying content is dimmed during a search.
@@ -66,6 +68,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
                                 if let artists = album["artists"] as? [JSONStandard] {
                                     if let artist = artists[0] as? JSONStandard {
                                         artistName = artist["name"] as! String
+                                        print("artistName = \(artistName)")
                                     }
                                 }
                                 if let imageObject = images[0] as? JSONStandard {
@@ -130,25 +133,26 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("prepare")
+        // sender is a UITableViewCell
         if segue.identifier == "musicPlayer" {
-            let destinationvc = segue.destination as! MusicPlayerViewController
-            if let indexPath = tableView.indexPathForSelectedRow?.row {
-                destinationvc.albumIm = songs[indexPath].albumImage
-                destinationvc.songTitle = songs[indexPath].titleSong
-                destinationvc.artist = songs[indexPath].artist
-                destinationvc.song = songs[indexPath].song
+            print("musicPlayer")
+            if let indexPath = tableView.indexPathForSelectedRow {
+                print("musicPlayer = \(indexPath.row)")
+                let destinationvc = segue.destination as! MusicPlayerViewController
+                destinationvc.albumIm = songs[indexPath.row].albumImage
+                destinationvc.songTitle = songs[indexPath.row].titleSong
+                destinationvc.artist = songs[indexPath.row].artist
+                destinationvc.song = songs[indexPath.row].song
             }
-        } else if segue.identifier == "searchWeb" {
-            let destinationvc = segue.destination as! SearchWebViewController
-            let indexPath2 = tableView.indexPathForSelectedRow?.row.
-            print("indexPath2 = \(indexPath2)")
-            if let indexPath = tableView.indexPathForSelectedRow?.row {
-                destinationvc.artist = songs[indexPath].artist
-                print("art = \(destinationvc.artist)")
-            }
-        } else {
-            print("no segue")
         }
-        
+        if segue.identifier == "searchWeb" {
+            print("searchWeb")
+            print("\(sender)")
+            let destinationvc = segue.destination as! SearchWebViewController
+            let cell = self.tableView.indexPath(for: sender as! UITableViewCell)
+            print("cell = \(cell?[1])")
+            destinationvc.artist = songs[(cell?[1])!].artist
+        }
     }
 }

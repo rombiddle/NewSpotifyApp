@@ -19,7 +19,8 @@ class SearchWebViewController: UIViewController {
         let urlString = "https://fr.wikipedia.org/wiki/" + artist
         print(artist)
         print(urlString)
-        let url = NSURL(string: urlString)
+        let newURL = urlString.replacingOccurrences(of: " ", with: "_")
+        let url = NSURL(string: newURL)
         let request = NSURLRequest(url: url as! URL)
         print(request)
         webView.loadRequest(request as URLRequest)

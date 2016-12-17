@@ -65,7 +65,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G9m-aI-HsL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="20" y="-355"/>
+            <point key="canvasLocation" x="-518" y="-355"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="cdA-qU-soO">
@@ -167,8 +167,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="6eR-GS-OTy" kind="show" identifier="musicPlayer" id="28N-iY-GUy"/>
-                                    <segue destination="Gz3-em-e4x" kind="show" identifier="searchWeb" trigger="accessoryAction" id="5oh-dc-4h1"/>
+                                    <segue destination="6eR-GS-OTy" kind="show" identifier="musicPlayer" id="s85-11-oFi"/>
+                                    <segue destination="Gz3-em-e4x" kind="show" identifier="searchWeb" trigger="accessoryAction" id="8H0-Ya-Pkz"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -365,7 +365,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ABf-AV-QN4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-935" y="-355"/>
+            <point key="canvasLocation" x="-1391" y="-355"/>
         </scene>
     </scenes>
     <resources>
