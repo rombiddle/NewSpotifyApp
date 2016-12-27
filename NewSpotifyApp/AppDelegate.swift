@@ -32,6 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Color setup
+        UITabBar.appearance().tintColor = UIColor(colorLiteralRed: (30/255), green: (215/255), blue: (96/255), alpha: 1.0)
+        UINavigationBar.appearance().tintColor = UIColor(colorLiteralRed: (30/255), green: (215/255), blue: (96/255), alpha: 1.0)
+        UISearchBar.appearance().tintColor = UIColor(colorLiteralRed: (30/255), green: (215/255), blue: (96/255), alpha: 1.0)
+        
         // Override point for customization after application launch.
         
         // The client ID you got from the developer site

@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import AVFoundation
+import CoreData
 
 var player = AVAudioPlayer()
 
@@ -24,12 +25,15 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     var searchController : UISearchController!
     var songs = [song]()
     typealias JSONStandard = [String : AnyObject]
+    let managedContext = DataManager().objectContext
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         //self.tableView.delegate = self
         //self.tableView.dataSource = self
+        
+        
         
         searchController = UISearchController(searchResultsController: nil)
         // A Boolean indicating whether the underlying content is dimmed during a search.
@@ -42,6 +46,27 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         tableView.tableHeaderView = searchController.searchBar
         tableView.reloadData()
         
+    }
+    
+    // CoreData
+    
+    func saveSong(_ song: song) {
+        
+        let entity =  NSEntityDescription.entity(forEntityName: "Song", in:managedContext!)
+        
+        let songCD = NSManagedObject(entity: entity!, insertInto: managedContext)
+        songCD.setValue(song.titleSong, forKey: "titleSong")
+        songCD.setValue(song.artist, forKey: "artist")
+        songCD.setValue(song.song, forKey: "song")
+        let imageData = UIImageJPEGRepresentation(song.albumImage, 1)
+        songCD.setValue(imageData, forKey: "albumImage")
+        print(songCD)
+        do {
+            try managedContext?.save()
+            print("saved")
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+        }
     }
     
     // Alamo
@@ -128,6 +153,26 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         artistLabel.text = songs[indexPath.row].artist
         
         return cell
+    }
+    
+    // swipe left enabled and show save button
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let save = UITableViewRowAction(style: .normal, title: "Save") { action, indexPath in
+            print("Save button tapped")
+            self.saveSong(self.songs[indexPath.row])
+            // swipe back when save button is clicked
+            tableView.setEditing(false, animated: true)
+        }
+        save.backgroundColor = UIColor(colorLiteralRed: (30/255), green: (215/255), blue: (96/255), alpha: 1.0)
+        return [save]
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
     }
 
     // MARK: - Navigation
