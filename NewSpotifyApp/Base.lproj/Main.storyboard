@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--test-->
+        <!--Login View Controller-->
         <scene sceneID="eNY-f8-6Sn">
             <objects>
                 <viewController id="2VL-qL-LQE" customClass="LoginViewController" customModule="NewSpotifyApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -57,7 +57,7 @@
                             <constraint firstItem="jBd-Lq-pPj" firstAttribute="centerX" secondItem="93U-FB-BqS" secondAttribute="centerX" id="ZTP-sg-gDq"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="test" id="wJm-cf-Frg"/>
+                    <navigationItem key="navigationItem" id="wJm-cf-Frg"/>
                     <connections>
                         <outlet property="loginButtonOutlet" destination="d9l-oe-MCR" id="UOU-rO-dwW"/>
                         <segue destination="qxf-oQ-uIT" kind="show" identifier="ShowPlayer" id="zdj-iE-RCh"/>

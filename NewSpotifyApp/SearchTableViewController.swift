@@ -13,6 +13,7 @@ import CoreData
 
 var player = AVAudioPlayer()
 
+// struct of the song object displayed in the tableview
 struct song {
     let titleSong : String
     let artist : String
@@ -26,26 +27,42 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     var songs = [song]()
     typealias JSONStandard = [String : AnyObject]
     let managedContext = DataManager().objectContext
+    weak var activityIndicatorView: UIActivityIndicatorView!
+    
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        //self.tableView.delegate = self
-        //self.tableView.dataSource = self
         
-        
+        // creating activity indicator view
+        let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        tableView.backgroundView = activityIndicatorView
+        self.activityIndicatorView = activityIndicatorView
         
         searchController = UISearchController(searchResultsController: nil)
         // A Boolean indicating whether the underlying content is dimmed during a search.
         searchController.dimsBackgroundDuringPresentation = true
         // A Boolean indicating whether the navigation bar should be hidden when searching.
         searchController.hidesNavigationBarDuringPresentation = false
-        
         searchController.searchBar.delegate = self
         
         tableView.tableHeaderView = searchController.searchBar
         tableView.reloadData()
         
+    }
+    
+    // activity indicator view
+    
+    func startAnimation() {
+        print("startAnimating")
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        activityIndicatorView.startAnimating()
+    }
+    
+    func stopAnimation() {
+        print("stopAnimating")
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
+        activityIndicatorView.stopAnimating()
     }
     
     // CoreData
@@ -108,6 +125,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
                     }
                 }
             }
+            stopAnimation()
             tableView.reloadData()
         }
         catch {
@@ -123,6 +141,9 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     }
      
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        startAnimation()
+        
         if let urlCreate = try? SPTSearch.createRequestForSearch(withQuery: searchController.searchBar.text!.lowercased(), queryType: .queryTypeTrack, accessToken: SPTAuth.defaultInstance().session.accessToken!) {
             callAlamo(url: String(describing: urlCreate))
         }
