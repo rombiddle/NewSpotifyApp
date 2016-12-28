@@ -14,8 +14,6 @@ import Alamofire
 import AVFoundation
 import CoreData
 
-var player = AVAudioPlayer()
-
 // struct of the song object displayed in the tableview
 struct song {
     let titleSong : String

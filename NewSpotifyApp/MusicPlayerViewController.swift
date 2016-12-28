@@ -10,14 +10,13 @@ import UIKit
 import AVFoundation
 import AudioToolbox
 
-// HELP
-// SPTAudioStreamingDelegate = Defines events relating to the connection to the Spotify service.
-// SPTAudioStreamingPlaybackDelegate = Defines events relating to audio playback
-// SPTAudioStreamingController = This class manages audio streaming from Spotify
+//  SPTAudioStreamingDelegate = Defines events relating to the connection to the Spotify service.
+//  SPTAudioStreamingPlaybackDelegate = Defines events relating to audio playback
+//  SPTAudioStreamingController = This class manages audio streaming from Spotify
 
 class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
 
-    // song object sent from the SearchTableViewController through the segue
+    //  song object sent from the SearchTableViewController through the segue
     var songTitle = String()
     var albumIm = UIImage()
     var artist = String()
@@ -56,7 +55,6 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
         songTitleLabel.text = songTitle
         albumImage.image = albumIm
         artistLabel.text = artist
-        
         //  the initial image when I get on this view is the pause button because the song plays automatically
         playPauseOutlet.setImage(UIImage(named: "Circled Pause.png"), for: .normal)
     }
@@ -69,13 +67,9 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
             //  I create the new spotify session
             self.handleNewSession()
         } else {
-            //  Here I change the URI of the current track
-            SPTAudioStreamingController.sharedInstance().playSpotifyURI(song, startingWith: 0, startingWithPosition: 0) { error in
-                if error != nil {
-                    print("*** failed to play: \(error)")
-                    return
-                }
-            }
+            //  in order to have the audioStreaming delegate to work, I have to logout and close the session everytime I want to play a new song
+            SPTAudioStreamingController.sharedInstance().logout()
+            closeSession()
         }
     }
     
@@ -102,13 +96,15 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
         do {
             // Shut down the `SPTAudioStreamingController` thread
             try SPTAudioStreamingController.sharedInstance().stop()
-            SPTAuth.defaultInstance().session = nil
-            _ = self.navigationController!.popViewController(animated: true)
+            
+            //SPTAuth.defaultInstance().session = nil
+            //_ = self.navigationController!.popViewController(animated: true)
         } catch let error {
             let alert = UIAlertController(title: "Error deinit", message: error.localizedDescription, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             self.present(alert, animated: true, completion: { _ in })
         }
+        self.handleNewSession()
     }
         
     // Called when the streaming controller recieved a message for the end user from the Spotify service
