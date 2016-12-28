@@ -13,7 +13,7 @@ extension FileManager {
     public static func documentURL() -> URL? {
         return self.documentURL(childPath: nil)
     }
-    
+
     // recuperer le chemin absolue du doc + rajout childpath ex: /data.db
     public static func documentURL(childPath: String?) -> URL? {
         // renvoie chemin absolue du document

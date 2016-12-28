@@ -5,6 +5,7 @@
 //  Created by Romain Brunie on 12/8/16.
 //  Copyright © 2016 Romain Brunie. All rights reserved.
 //
+//  This is the login view to spotify
 
 import UIKit
 import WebKit
@@ -26,7 +27,7 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
         // Check if "flip-flop" application authentication is supported.
         if SPTAuth.supportsApplicationAuthentication() {
             print("flip flop supported")
-            UIApplication.shared.openURL(auth!.spotifyAppAuthenticationURL())
+            UIApplication.shared.open(auth!.spotifyAppAuthenticationURL(), options: [:], completionHandler: nil)
         } else {
             print("flip flop NOT supported")
             self.authViewController = self.getAuthViewController(withURL: SPTAuth.defaultInstance().spotifyWebAuthenticationURL())

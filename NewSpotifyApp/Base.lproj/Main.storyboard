@@ -76,11 +76,6 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
-                            <color key="value" red="0.11764705882352941" green="0.84313725490196079" blue="0.37647058823529411" alpha="1" colorSpace="calibratedRGB"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="ydh-lp-FL5" kind="relationship" relationship="viewControllers" id="whX-Ke-PGV"/>
                         <segue destination="jAL-KJ-g2V" kind="relationship" relationship="viewControllers" id="0gi-yN-bFO"/>
@@ -149,13 +144,7 @@
                             <outlet property="delegate" destination="nw0-MF-5iW" id="WES-RQ-sRG"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Downloads" id="MOR-2b-uVd">
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="2dR-3m-AgR">
-                            <connections>
-                                <action selector="editActionButton:" destination="nw0-MF-5iW" id="wKZ-iO-DBX"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Downloads" id="MOR-2b-uVd"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e03-8e-XlU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -404,7 +393,7 @@
         <!--Navigation Controller-->
         <scene sceneID="ZX1-WM-oLV">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YUy-V4-sCT" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="YUy-V4-sCT" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="XnK-Ab-ZH0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

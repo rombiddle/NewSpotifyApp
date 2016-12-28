@@ -10,7 +10,7 @@
 		25168EF21DFD4020009E0AD2 /* Spotify_Icon_RGB_Green.png in Resources */ = {isa = PBXBuildFile; fileRef = 25168EF11DFD4020009E0AD2 /* Spotify_Icon_RGB_Green.png */; };
 		25168EF41DFD4553009E0AD2 /* Spotify_Icon_RGB_Green120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 25168EF31DFD4553009E0AD2 /* Spotify_Icon_RGB_Green120x120.png */; };
 		25168EF61DFD90EE009E0AD2 /* MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25168EF51DFD90EE009E0AD2 /* MusicPlayerViewController.swift */; };
-		255BF5AC1E111D5C00F2F5B1 /* NewSpotifyApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 255BF5AA1E111D5C00F2F5B1 /* NewSpotifyApp.xcdatamodeld */; };
+		255BF5D71E12FC6D00F2F5B1 /* NewSpotifyApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 255BF5D51E12FC6D00F2F5B1 /* NewSpotifyApp.xcdatamodeld */; };
 		256694391DF98FAE00E79AAC /* NewSpotifyApp-Bridging-Header.m in Sources */ = {isa = PBXBuildFile; fileRef = 256694381DF98FAE00E79AAC /* NewSpotifyApp-Bridging-Header.m */; };
 		2566943C1DF9C1E900E79AAC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2566943B1DF9C1E900E79AAC /* LoginViewController.swift */; };
 		2566943F1DF9C30D00E79AAC /* Spotify_Logo_RGB_Green.png in Resources */ = {isa = PBXBuildFile; fileRef = 2566943E1DF9C30D00E79AAC /* Spotify_Logo_RGB_Green.png */; };
@@ -37,7 +37,7 @@
 		25168EF11DFD4020009E0AD2 /* Spotify_Icon_RGB_Green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spotify_Icon_RGB_Green.png; sourceTree = "<group>"; };
 		25168EF31DFD4553009E0AD2 /* Spotify_Icon_RGB_Green120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spotify_Icon_RGB_Green120x120.png; sourceTree = "<group>"; };
 		25168EF51DFD90EE009E0AD2 /* MusicPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayerViewController.swift; sourceTree = "<group>"; };
-		255BF5AB1E111D5C00F2F5B1 /* NewSpotifyApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NewSpotifyApp.xcdatamodel; sourceTree = "<group>"; };
+		255BF5D61E12FC6D00F2F5B1 /* NewSpotifyApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NewSpotifyApp.xcdatamodel; sourceTree = "<group>"; };
 		256694371DF98FAE00E79AAC /* NewSpotifyApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NewSpotifyApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		256694381DF98FAE00E79AAC /* NewSpotifyApp-Bridging-Header.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NewSpotifyApp-Bridging-Header.m"; sourceTree = "<group>"; };
 		2566943B1DF9C1E900E79AAC /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -136,7 +136,6 @@
 		25D5F1301DF8286900CBB688 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				255BF5AA1E111D5C00F2F5B1 /* NewSpotifyApp.xcdatamodeld */,
 				25D5F1271DF8274000CBB688 /* LaunchScreen.storyboard */,
 				25D5F11F1DF8274000CBB688 /* Main.storyboard */,
 				25D5F11B1DF8274000CBB688 /* AppDelegate.swift */,
@@ -144,6 +143,7 @@
 				25D5F12A1DF8274000CBB688 /* Info.plist */,
 				258F4FA01E05C39F000AEC89 /* DataManager.swift */,
 				258F4FA21E05C3D3000AEC89 /* FileManager+Documents.swift */,
+				255BF5D51E12FC6D00F2F5B1 /* NewSpotifyApp.xcdatamodeld */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -200,7 +200,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Romain Brunie";
 				TargetAttributes = {
 					25D5F1171DF8274000CBB688 = {
@@ -301,8 +301,8 @@
 				2566943C1DF9C1E900E79AAC /* LoginViewController.swift in Sources */,
 				258F4FA11E05C39F000AEC89 /* DataManager.swift in Sources */,
 				25D5F11C1DF8274000CBB688 /* AppDelegate.swift in Sources */,
+				255BF5D71E12FC6D00F2F5B1 /* NewSpotifyApp.xcdatamodeld in Sources */,
 				25D5F1341DF82AE900CBB688 /* SearchTableViewController.swift in Sources */,
-				255BF5AC1E111D5C00F2F5B1 /* NewSpotifyApp.xcdatamodeld in Sources */,
 				256694431DF9D38800E79AAC /* WebViewController.swift in Sources */,
 				258F4FA31E05C3D3000AEC89 /* FileManager+Documents.swift in Sources */,
 				25D5F1361DF82AFD00CBB688 /* SavedTableViewController.swift in Sources */,
@@ -352,6 +352,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -402,6 +403,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -421,7 +423,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -431,6 +433,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 34BCB6745FCA2ADFBCD2BBC0 /* Pods-NewSpotifyApp.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = QKKS5PH8U6;
@@ -453,6 +456,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 32C6A924DA01F57496A9467C /* Pods-NewSpotifyApp.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = QKKS5PH8U6;
@@ -466,7 +470,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = local.NewSpotifyApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "NewSpotifyApp/NewSpotifyApp-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -495,14 +499,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		255BF5AA1E111D5C00F2F5B1 /* NewSpotifyApp.xcdatamodeld */ = {
+		255BF5D51E12FC6D00F2F5B1 /* NewSpotifyApp.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				255BF5AB1E111D5C00F2F5B1 /* NewSpotifyApp.xcdatamodel */,
+				255BF5D61E12FC6D00F2F5B1 /* NewSpotifyApp.xcdatamodel */,
 			);
-			currentVersion = 255BF5AB1E111D5C00F2F5B1 /* NewSpotifyApp.xcdatamodel */;
-			name = NewSpotifyApp.xcdatamodeld;
-			path = ../../NewSpotifyApp.xcdatamodeld;
+			currentVersion = 255BF5D61E12FC6D00F2F5B1 /* NewSpotifyApp.xcdatamodel */;
+			path = NewSpotifyApp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

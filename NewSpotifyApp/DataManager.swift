@@ -20,7 +20,7 @@ class DataManager : NSObject {
         if let modelURL = Bundle.main.url(forResource: "NewSpotifyApp", withExtension: "momd") {
             if let model = NSManagedObjectModel(contentsOf: modelURL) {
                 
-                if let storageURL = FileManager.documentURL(childPath: "MyDatabase2.db") {
+                if let storageURL = FileManager.documentURL(childPath: "MyDatabase3.db") {
                     let storeCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
                     _ = try? storeCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storageURL, options: nil)
                     
