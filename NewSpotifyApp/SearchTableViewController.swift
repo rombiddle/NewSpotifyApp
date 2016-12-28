@@ -34,10 +34,10 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     //  activity indicator view
     weak var activityIndicatorView: UIActivityIndicatorView!
     
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        print("viewDidLoad search")
         
         //  creating activity indicator view
         let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
@@ -103,36 +103,45 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     func parseData(JSONData: Data) {
         do {
             var readableJSON = try JSONSerialization.jsonObject(with: JSONData, options: .mutableContainers) as! JSONStandard
-            if let tracks = readableJSON["tracks"] as? JSONStandard {
-                if let items = tracks["items"] as? [JSONStandard] {
-                    for item in items {
-                        let songURL = item["uri"] as! String
-                        print("songURL = \(songURL)")
-                        let name = item["name"] as! String
-                        if let album = item["album"] as? JSONStandard{
-                            if let images = album["images"] as? [JSONStandard] {
-                                var artistName = ""
-                                if let artists = album["artists"] as? [JSONStandard] {
-                                    if let artist = artists[0] as? JSONStandard {
-                                        artistName = artist["name"] as! String
-                                        print("artistName = \(artistName)")
+            //  I do this async because it takes time and does not freeze the UI
+            DispatchQueue.global(qos: .userInteractive).async {
+                if let tracks = readableJSON["tracks"] as? JSONStandard {
+                    if let items = tracks["items"] as? [JSONStandard] {
+                        for item in items {
+                            let songURL = item["uri"] as! String
+                            print("songURL = \(songURL)")
+                            let name = item["name"] as! String
+                            if let album = item["album"] as? JSONStandard{
+                                if let images = album["images"] as? [JSONStandard] {
+                                    var artistName = ""
+                                    if let artists = album["artists"] as? [JSONStandard] {
+                                        if let artist = artists[0] as? JSONStandard {
+                                            artistName = artist["name"] as! String
+                                            print("artistName = \(artistName)")
+                                        }
                                     }
-                                }
-                                if let imageObject = images[0] as? JSONStandard {
-                                    let imageURL = NSURL(string: imageObject["url"] as! String)
-                                    let imageData = NSData(contentsOf: imageURL as! URL)
-                                    let image = UIImage(data: imageData as! Data)
-                                    songs.append(song.init(titleSong: name, artist: artistName, albumImage: image!, song: songURL))
-                                }
+                                    if let imageObject = images[0] as? JSONStandard {
+                                        let imageURL = NSURL(string: imageObject["url"] as! String)
+                                        let imageData = NSData(contentsOf: imageURL as! URL)
+                                        let image = UIImage(data: imageData as! Data)
+                                        self.songs.append(song.init(titleSong: name, artist: artistName, albumImage: image!, song: songURL))
+                                    } else {
+                                        self.songs.append(song.init(titleSong: name, artist: artistName, albumImage: UIImage(), song: songURL))
+                                    }
                                 
+                                }
                             }
                         }
                     }
                 }
+                //  I go back to the main queue in order to update the UI
+                DispatchQueue.main.async {
+                    //  stop activity indicator view because the search and parsing is now done
+                    self.stopAnimation()
+                    //  I reload the data of the tableView for updating
+                    self.tableView.reloadData()
+                }
             }
-            //  stop activity indicator view because the search and parsing is now done
-            stopAnimation()
-            tableView.reloadData()
         }
         catch {
             print(error)

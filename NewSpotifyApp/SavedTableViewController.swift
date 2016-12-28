@@ -96,5 +96,23 @@ class SavedTableViewController: UITableViewController {
         // Return false if you do not want the item to be re-orderable.
         return false
     }
+    
+    //  MARK: - Navigation
+    //  I set up the table view cell to segue information to other views
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("prepare")
+        //  sender is a UITableViewCell
+        //  The musicPlayer identifier goes to the MusicPlayerViewController (it is where the audio player is in order to play the song)
+        if segue.identifier == "musicPlayer" {
+            print("musicPlayer")
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let destinationvc = segue.destination as! MusicPlayerViewController
+                destinationvc.albumIm = UIImage(data: (Song[indexPath.row].value(forKey: "albumImage") as? Data)!)!
+                destinationvc.songTitle = (Song[indexPath.row].value(forKey: "titleSong") as? String)!
+                destinationvc.artist = (Song[indexPath.row].value(forKey: "artist") as? String)!
+                destinationvc.song = (Song[indexPath.row].value(forKey: "song") as? String)!
+            }
+        }
+    }
 
 }

@@ -17,6 +17,7 @@ import AudioToolbox
 
 class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
 
+    // song object sent from the SearchTableViewController through the segue
     var songTitle = String()
     var albumIm = UIImage()
     var artist = String()
@@ -24,78 +25,58 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     
     let audioSession = AVAudioSession.sharedInstance()
     
+    var isChangingProgress: Bool = false
+    
     @IBOutlet var albumImage: UIImageView!
     @IBOutlet var artistLabel: UILabel!
     @IBOutlet var songTitleLabel: UILabel!
     @IBOutlet var musicSlider: UISlider!
-    @IBAction func playerButton(_ sender: UIButton) {
-        if sender.titleLabel?.text == "Prev" {
-            SPTAudioStreamingController.sharedInstance().skipPrevious(nil)
-        } else if sender.titleLabel?.text == "Next"{
-            SPTAudioStreamingController.sharedInstance().skipNext(nil)
-        } else {
-            SPTAudioStreamingController.sharedInstance().setIsPlaying(!SPTAudioStreamingController.sharedInstance().playbackState.isPlaying, callback: nil)
-        }
+    @IBOutlet var playPauseOutlet: UIButton!
+    
+    //  Play / Pause Button
+    @IBAction func playPauseButton(_ sender: UIButton) {
+        //  I play / pause the song
+        SPTAudioStreamingController.sharedInstance().setIsPlaying(!SPTAudioStreamingController.sharedInstance().playbackState.isPlaying, callback: nil)
     }
     
-    func updateUI() {
-        print("updateUI")
-        // SPTAuth = This class provides helper methods for authenticating users against the Spotify OAuth authentication service.
-        let auth = SPTAuth.defaultInstance()
-        if SPTAudioStreamingController.sharedInstance().metadata == nil || SPTAudioStreamingController.sharedInstance().metadata.currentTrack == nil {
-            self.albumImage.image = nil
-            return
-        }
-        //self.spinner.startAnimating()
-        //self.nextButton.isEnabled = SPTAudioStreamingController.sharedInstance().metadata.nextTrack != nil
-        //self.prevButton.isEnabled = SPTAudioStreamingController.sharedInstance().metadata.prevTrack != nil
-        self.songTitleLabel.text = SPTAudioStreamingController.sharedInstance().metadata.currentTrack?.name
-        self.artistLabel.text = SPTAudioStreamingController.sharedInstance().metadata.currentTrack?.artistName
-        //self.playbackSourceTitle.text = SPTAudioStreamingController.sharedInstance().metadata.currentTrack?.playbackSourceName
+    @IBAction func seekValueChanged(_ sender: UISlider) {
+        self.isChangingProgress = false
+        let dest = SPTAudioStreamingController.sharedInstance().metadata!.currentTrack!.duration * Double(self.musicSlider.value)
+        SPTAudioStreamingController.sharedInstance().seek(to: dest, callback: nil)
+    }
+    
+    @IBAction func proggressTouchDown(_ sender: UISlider) {
+        self.isChangingProgress = true
+    }
+    
+    override func viewDidLoad() {
+        print("viewDidLoad")
+        super.viewDidLoad()
+        //  Here I set up the UI View from segue data
+        songTitleLabel.text = songTitle
+        albumImage.image = albumIm
+        artistLabel.text = artist
         
-        print("metadata = \(SPTAudioStreamingController.sharedInstance().metadata.currentTrack!)")
-        
-        // SPTTrack = This class represents a track on the Spotify service
-        // track = Request the track at the given Spotify URI.
-        // This method takes Spotify URIs in the form `spotify:*`, NOT HTTP URLs.
-        SPTTrack.track(withURI: URL(string: SPTAudioStreamingController.sharedInstance().metadata.currentTrack!.uri)!, accessToken: auth!.session.accessToken, market: nil) { error, result in
-            
-            if let track = result as? SPTTrack {
-                let imageURL = track.album.largestCover.imageURL
-                if imageURL == nil {
-                    print("Album \(track.album) doesn't have any images!")
-                    self.albumImage.image = nil
-                    return
-                }
-                
-                // Pop over to a background queue to load the image over the network.
-                DispatchQueue.global().async {
-                    do {
-                        let imageData = try Data(contentsOf: imageURL!, options: [])
-                        let image = UIImage(data: imageData)
-                        // …and back to the main queue to display the image.
-                        DispatchQueue.main.async {
-                            //self.spinner.stopAnimating()
-                            self.albumImage.image = image
-                            if image == nil {
-                                print("Couldn't load cover image with error: \(error)")
-                                return
-                            }
-                        }
-                    } catch let error {
-                        print(error.localizedDescription)
-                    }
-                }
-            }
-        }
-        
+        //  the initial image when I get on this view is the pause button because the song plays automatically
+        playPauseOutlet.setImage(UIImage(named: "Circled Pause.png"), for: .normal)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         print("viewDidAppear")
         super.viewDidAppear(animated)
-        self.handleNewSession()
-        print("session: \(SPTAuth.defaultInstance().session.accessToken!)")
+        //  The first time I call the MusicPlayerViewController, I set up a new session and then I do not create a new one, I keep the same session and change the URI of the song
+        if SPTAudioStreamingController.sharedInstance().loggedIn == false {
+            //  I create the new spotify session
+            self.handleNewSession()
+        } else {
+            //  Here I change the URI of the current track
+            SPTAudioStreamingController.sharedInstance().playSpotifyURI(song, startingWith: 0, startingWithPosition: 0) { error in
+                if error != nil {
+                    print("*** failed to play: \(error)")
+                    return
+                }
+            }
+        }
     }
     
     func handleNewSession() {
@@ -129,7 +110,7 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
             self.present(alert, animated: true, completion: { _ in })
         }
     }
-    
+        
     // Called when the streaming controller recieved a message for the end user from the Spotify service
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController, didReceiveMessage message: String) {
         print("didReceiveMessage")
@@ -144,9 +125,13 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
         print("is playing = \(isPlaying)")
         if isPlaying {
             self.activateAudioSession()
+            //  If the track is playing, I set the pause image button
+            playPauseOutlet.setImage(UIImage(named: "Circled Pause.png"), for: .normal)
         }
         else {
             self.deactivateAudioSession()
+            //  If the track is NOT playing, I set the play image button
+            playPauseOutlet.setImage(UIImage(named: "Circled Play.png"), for: .normal)
         }
     }
     
@@ -157,7 +142,6 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     // the latest metadata information.
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController, didChange metadata: SPTPlaybackMetadata) {
         print("didChange")
-        self.updateUI()
     }
     
     // Called for each received low-level event
@@ -170,6 +154,7 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     // Called when the streaming controller logs out
     func audioStreamingDidLogout(_ audioStreaming: SPTAudioStreamingController) {
         print("audioStreamingDidLogout")
+        //SearchTableViewController.clo
         self.closeSession()
     }
     
@@ -181,12 +166,12 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     // Called when playback has progressed
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController, didChangePosition position: TimeInterval) {
         print("didChangePosition")
-//        if self.isChangingProgress {
-//            return
-//        }
-//        let positionDouble = Double(position)
-//        let durationDouble = Double(SPTAudioStreamingController.sharedInstance().metadata.currentTrack!.duration)
-        //self.progressSlider.value = Float(positionDouble / durationDouble)
+        if self.isChangingProgress {
+            return
+        }
+        let positionDouble = Double(position)
+        let durationDouble = Double(SPTAudioStreamingController.sharedInstance().metadata.currentTrack!.duration)
+        self.musicSlider.value = Float(positionDouble / durationDouble)
     }
     
     // Called when the streaming controller begins playing a new track.
@@ -207,10 +192,9 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     // Called when the streaming controller logs in successfully
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController) {
         print("audioStreamingDidLogin")
-        self.updateUI()
         print("song = \(song)")
-        //SPTAudioStreamingController.sharedInstance().pl
-        SPTAudioStreamingController.sharedInstance().playSpotifyURI(song, startingWith: 0, startingWithPosition: 10) { error in
+        
+        SPTAudioStreamingController.sharedInstance().playSpotifyURI(song, startingWith: 0, startingWithPosition: 0) { error in
             if error != nil {
                 print("*** failed to play: \(error)")
                 return
@@ -238,13 +222,5 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
             print(error.localizedDescription)
         }
     }
-
-    override func viewDidLoad() {
-        print("viewDidLoad")
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        songTitleLabel.text = songTitle
-        albumImage.image = albumIm
-        artistLabel.text = artist
-    }
+    
 }

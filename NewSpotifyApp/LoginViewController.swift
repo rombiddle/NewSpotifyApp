@@ -48,10 +48,9 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
         NotificationCenter.default.addObserver(self, selector: #selector(self.sessionUpdatedNotification), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
         //self.statusLabel.text = ""
         self.firstLoad = true
-        // Do any additional setup after loading the view.
         
+        // The login button gets rounded like a potify button
         loginButtonOutlet.layer.cornerRadius = 20
-        
         
     }
 

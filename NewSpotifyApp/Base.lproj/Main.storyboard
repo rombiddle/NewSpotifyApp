@@ -137,6 +137,9 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="Pxn-AD-AAh" secondAttribute="trailing" id="z5r-o6-dpR"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="6eR-GS-OTy" kind="show" identifier="musicPlayer" id="oqy-nu-wMa"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -268,59 +271,48 @@
                                 <rect key="frame" x="0.0" y="64" width="320" height="359"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="249" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="kSV-Nx-RrC">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="244.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="199.5"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" text="Artist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TAK-YG-kQS">
-                                        <rect key="frame" x="20" y="248.5" width="280" height="20.5"/>
+                                        <rect key="frame" x="20" y="203.5" width="280" height="20.5"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" text="Song" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdw-mw-xRD">
-                                        <rect key="frame" x="20" y="273" width="280" height="18"/>
+                                        <rect key="frame" x="20" y="228" width="280" height="18"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="dxu-IE-jds">
-                                        <rect key="frame" x="18" y="295" width="284" height="31"/>
+                                        <rect key="frame" x="18" y="250" width="284" height="31"/>
+                                        <connections>
+                                            <action selector="proggressTouchDown:" destination="6eR-GS-OTy" eventType="touchDown" id="HzW-an-pre"/>
+                                            <action selector="seekValueChanged:" destination="6eR-GS-OTy" eventType="valueChanged" id="kI2-LW-vVo"/>
+                                        </connections>
                                     </slider>
-                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="mKK-Ka-Smq">
-                                        <rect key="frame" x="20" y="329" width="280" height="30"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksw-zJ-9Cg">
-                                                <rect key="frame" x="0.0" y="0.0" width="93.5" height="30"/>
-                                                <state key="normal" title="Prev"/>
-                                                <connections>
-                                                    <action selector="playerButton:" destination="6eR-GS-OTy" eventType="touchUpInside" id="2aR-gR-C2a"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pLd-mG-kIg">
-                                                <rect key="frame" x="93.5" y="0.0" width="93" height="30"/>
-                                                <state key="normal" title="Play/Pause"/>
-                                                <connections>
-                                                    <action selector="playerButton:" destination="6eR-GS-OTy" eventType="touchUpInside" id="mmb-Su-ur4"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="clc-r4-TWl">
-                                                <rect key="frame" x="186.5" y="0.0" width="93.5" height="30"/>
-                                                <state key="normal" title="Next"/>
-                                                <connections>
-                                                    <action selector="playerButton:" destination="6eR-GS-OTy" eventType="touchUpInside" id="2jK-gL-15m"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X7u-B4-CmG">
+                                        <rect key="frame" x="122.5" y="284" width="75" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="75" id="3lb-PS-KF3"/>
+                                            <constraint firstAttribute="height" constant="75" id="cyO-0L-SEC"/>
+                                        </constraints>
+                                        <state key="normal">
+                                            <color key="titleColor" red="0.1176470588" green="0.84313725490000002" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="playPauseButton:" destination="6eR-GS-OTy" eventType="touchUpInside" id="ZX6-TY-FgT"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="TAK-YG-kQS" firstAttribute="leading" secondItem="eQS-pH-KiE" secondAttribute="leading" constant="20" symbolic="YES" id="8De-VZ-WMX"/>
                                     <constraint firstAttribute="trailing" secondItem="TAK-YG-kQS" secondAttribute="trailing" constant="20" symbolic="YES" id="J2h-sY-wux"/>
                                     <constraint firstAttribute="trailing" secondItem="kSV-Nx-RrC" secondAttribute="trailing" id="Sf9-wT-dVX"/>
                                     <constraint firstItem="cdw-mw-xRD" firstAttribute="leading" secondItem="eQS-pH-KiE" secondAttribute="leading" constant="20" symbolic="YES" id="Tvb-s0-Hbg"/>
-                                    <constraint firstAttribute="trailing" secondItem="mKK-Ka-Smq" secondAttribute="trailing" constant="20" symbolic="YES" id="U9T-41-mOx"/>
                                     <constraint firstItem="dxu-IE-jds" firstAttribute="leading" secondItem="eQS-pH-KiE" secondAttribute="leading" constant="20" symbolic="YES" id="i1t-k4-F1g"/>
                                     <constraint firstAttribute="trailing" secondItem="cdw-mw-xRD" secondAttribute="trailing" constant="20" symbolic="YES" id="lhs-vQ-rwR"/>
-                                    <constraint firstItem="mKK-Ka-Smq" firstAttribute="leading" secondItem="eQS-pH-KiE" secondAttribute="leading" constant="20" symbolic="YES" id="mkE-94-cdT"/>
                                     <constraint firstItem="kSV-Nx-RrC" firstAttribute="leading" secondItem="eQS-pH-KiE" secondAttribute="leading" id="rWb-GA-GIX"/>
                                     <constraint firstAttribute="trailing" secondItem="dxu-IE-jds" secondAttribute="trailing" constant="20" symbolic="YES" id="z2G-NP-Ko7"/>
                                 </constraints>
@@ -339,7 +331,8 @@
                     <connections>
                         <outlet property="albumImage" destination="kSV-Nx-RrC" id="vaX-5w-Ttm"/>
                         <outlet property="artistLabel" destination="TAK-YG-kQS" id="uCn-28-CWK"/>
-                        <outlet property="musicSlider" destination="dxu-IE-jds" id="fFc-Gm-sRI"/>
+                        <outlet property="musicSlider" destination="dxu-IE-jds" id="qIF-IG-LND"/>
+                        <outlet property="playPauseOutlet" destination="X7u-B4-CmG" id="Ldm-3E-waN"/>
                         <outlet property="songTitleLabel" destination="cdw-mw-xRD" id="Ktg-hN-iH6"/>
                     </connections>
                 </viewController>
@@ -412,5 +405,8 @@
     <resources>
         <image name="Spotify_Logo_RGB_Green.png" width="2362" height="709"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="oqy-nu-wMa"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.1176470588" green="0.84313725490000002" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
 </document>
