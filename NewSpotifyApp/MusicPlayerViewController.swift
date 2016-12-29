@@ -51,17 +51,6 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     override func viewDidLoad() {
         print("viewDidLoad")
         super.viewDidLoad()
-        //  Here I set up the UI View from segue data
-        songTitleLabel.text = songTitle
-        albumImage.image = albumIm
-        artistLabel.text = artist
-        //  the initial image when I get on this view is the pause button because the song plays automatically
-        playPauseOutlet.setImage(UIImage(named: "Circled Pause.png"), for: .normal)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        print("viewDidAppear")
-        super.viewDidAppear(animated)
         //  The first time I call the MusicPlayerViewController, I set up a new session and then I do not create a new one, I keep the same session and change the URI of the song
         if SPTAudioStreamingController.sharedInstance().loggedIn == false {
             //  I create the new spotify session
@@ -71,6 +60,12 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
             SPTAudioStreamingController.sharedInstance().logout()
             closeSession()
         }
+        //  Here I set up the UI View from segue data
+        songTitleLabel.text = songTitle
+        albumImage.image = albumIm
+        artistLabel.text = artist
+        //  the initial image when I get on this view is the pause button because the song plays automatically
+        playPauseOutlet.setImage(UIImage(named: "Circled Pause.png"), for: .normal)
     }
     
     func handleNewSession() {
@@ -96,7 +91,6 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
         do {
             // Shut down the `SPTAudioStreamingController` thread
             try SPTAudioStreamingController.sharedInstance().stop()
-            
             //SPTAuth.defaultInstance().session = nil
             //_ = self.navigationController!.popViewController(animated: true)
         } catch let error {
@@ -151,7 +145,7 @@ class MusicPlayerViewController: UIViewController, SPTAudioStreamingDelegate, SP
     func audioStreamingDidLogout(_ audioStreaming: SPTAudioStreamingController) {
         print("audioStreamingDidLogout")
         //SearchTableViewController.clo
-        self.closeSession()
+        //self.closeSession()
     }
     
     // Called on error
