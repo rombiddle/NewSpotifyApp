@@ -5,6 +5,7 @@
 //  Created by Seth Rininger on 11/11/16.
 //  Copyright © 2016 Seth Rininger. All rights reserved.
 //
+//  this controller is used by the LoginViewController in order to login to spotify through a web view
 
 import UIKit
 import WebKit

@@ -26,7 +26,9 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     
     //  search controller
     var searchController : UISearchController!
+    //  array of the song struct for tableView
     var songs = [song]()
+    //  typalias for the json I get from api results
     typealias JSONStandard = [String : AnyObject]
     let managedContext = DataManager().objectContext
     //  activity indicator view
@@ -35,7 +37,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        print("viewDidLoad search")
         
         //  creating activity indicator view
         let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
@@ -82,7 +83,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         
         do {
             try managedContext?.save()
-            print("saved")
         } catch let error as NSError  {
             print("Could not save \(error), \(error.userInfo)")
         }
@@ -91,7 +91,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     
     //  Alamofire makes an url request to spotify api
     func callAlamo(url: String) {
-        print(url)
+        print("url = \(url)")
         Alamofire.request(url).responseJSON { (response) in
             self.parseData(JSONData: response.data!)
         }
@@ -107,7 +107,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
                     if let items = tracks["items"] as? [JSONStandard] {
                         for item in items {
                             let songURL = item["uri"] as! String
-                            print("songURL = \(songURL)")
+                            print(songURL)
                             let name = item["name"] as! String
                             if let album = item["album"] as? JSONStandard{
                                 if let images = album["images"] as? [JSONStandard] {
@@ -115,7 +115,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
                                     if let artists = album["artists"] as? [JSONStandard] {
                                         if let artist = artists[0] as? JSONStandard {
                                             artistName = artist["name"] as! String
-                                            print("artistName = \(artistName)")
+                                            print(artistName)
                                         }
                                     }
                                     if let imageObject = images[0] as? JSONStandard {
@@ -210,11 +210,9 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     //  MARK: - Navigation
     //  I set up the table view cell to segue information to other views
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("prepare")
         //  sender is a UITableViewCell
         //  The musicPlayer identifier goes to the MusicPlayerViewController (it is where the audio player is in order to play the song)
         if segue.identifier == "musicPlayer" {
-            print("musicPlayer")
             if let indexPath = tableView.indexPathForSelectedRow {
                 let destinationvc = segue.destination as! MusicPlayerViewController
                 destinationvc.albumIm = songs[indexPath.row].albumImage
@@ -225,10 +223,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         }
         //  the searchWeb identifier goes to the SearchWebViewController (it search the artist name on wikipedia in a web view)
         if segue.identifier == "searchWeb" {
-            print("searchWeb")
             let destinationvc = segue.destination as! SearchWebViewController
             let cell = self.tableView.indexPath(for: sender as! UITableViewCell)
-            print("cell = \(cell?[1])")
             //  I only search on wikipedia for the artist name
             destinationvc.artist = songs[(cell?[1])!].artist
         }

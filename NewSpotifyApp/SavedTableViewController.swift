@@ -100,11 +100,9 @@ class SavedTableViewController: UITableViewController {
     //  MARK: - Navigation
     //  I set up the table view cell to segue information to other views
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("prepare")
         //  sender is a UITableViewCell
         //  The musicPlayer identifier goes to the MusicPlayerViewController (it is where the audio player is in order to play the song)
         if segue.identifier == "musicPlayer" {
-            print("musicPlayer")
             if let indexPath = tableView.indexPathForSelectedRow {
                 let destinationvc = segue.destination as! MusicPlayerViewController
                 destinationvc.albumIm = UIImage(data: (Song[indexPath.row].value(forKey: "albumImage") as? Data)!)!

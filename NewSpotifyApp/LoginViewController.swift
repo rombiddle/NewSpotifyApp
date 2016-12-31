@@ -15,6 +15,7 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
     var authViewController: UIViewController?
     var firstLoad: Bool!
     
+    //  login button
     @IBOutlet var loginButtonOutlet: UIButton!
     
     @IBAction func loginButtonS(_ sender: UIButton) {
@@ -22,7 +23,6 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
     }
     
     func openLoginPage() {
-        //self.statusLabel.text = "Logging in..."
         let auth = SPTAuth.defaultInstance()
         // Check if "flip-flop" application authentication is supported.
         if SPTAuth.supportsApplicationAuthentication() {
@@ -46,17 +46,11 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(self.sessionUpdatedNotification), name: NSNotification.Name(rawValue: "sessionUpdated"), object: nil)
-        //self.statusLabel.text = ""
         self.firstLoad = true
         
         // The login button gets rounded like a potify button
         loginButtonOutlet.layer.cornerRadius = 20
         
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,22 +83,18 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
     }
     
     func sessionUpdatedNotification(_ notification: Notification) {
-        //self.statusLabel.text = ""
         let auth = SPTAuth.defaultInstance()
         self.presentedViewController?.dismiss(animated: true, completion: { _ in })
         if auth!.session != nil && auth!.session.isValid() {
-            //self.statusLabel.text = ""
             self.showPlayer()
         }
         else {
-            //self.statusLabel.text = "Login failed."
             print("*** Failed to log in")
         }
     }
     
     func showPlayer() {
         self.firstLoad = false
-        //self.statusLabel.text = "Logged in."
         self.performSegue(withIdentifier: "ShowPlayer", sender: nil)
     }
     
@@ -114,11 +104,9 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
     }
 
     func renewTokenAndShowPlayer() {
-        //self.statusLabel.text = "Refreshing token..."
         SPTAuth.defaultInstance().renewSession(SPTAuth.defaultInstance().session) { error, session in
             SPTAuth.defaultInstance().session = session
             if error != nil {
-                //self.statusLabel.text = "Refreshing token failed."
                 print("*** Error renewing session: \(error)")
                 return
             }
@@ -129,37 +117,5 @@ class LoginViewController: UIViewController, SPTStoreControllerDelegate, WebView
     func webViewControllerDidFinish(_ controller: WebViewController) {
         // User tapped the close button. Treat as auth error
     }
-    
-//    @IBAction func loginButtonWasPressed(_ sender: SPTConnectButton) {
-//        self.openLoginPage()
-//    }
-    
-//    @IBAction func showSpotifyAppStoreClicked(_ sender: UIButton) {
-//        //self.statusLabel.text = "Presenting App Store..."
-//        let storeVC = SPTStoreViewController(campaignToken: "your_campaign_token", store: self)
-//        self.present(storeVC!, animated: true, completion: { _ in })
-//    }
-//    
-//    @IBAction func clearCookiesClicked(_ sender: UIButton) {
-//        let storage = HTTPCookieStorage.shared
-//        for cookie: HTTPCookie in storage.cookies! {
-//            if (cookie.domain as NSString).range(of: "spotify.").length > 0 || (cookie.domain as NSString).range(of: "facebook.").length > 0 {
-//                storage.deleteCookie(cookie)
-//            }
-//        }
-//        UserDefaults.standard.synchronize()
-//        //self.statusLabel.text! = "Cookies cleared."
-//    }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
